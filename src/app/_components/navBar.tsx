@@ -1,15 +1,17 @@
+import Link from "next/link";
+
 import { SignIn } from "@/app/_components/signIn";
 import { auth } from "../auth";
-interface TLink {
+interface iFancyLink {
   children: React.ReactNode;
   href: string;
   className?: string;
   disabled?: boolean;
 }
 
-const Link = ({ children, href, className, disabled }: TLink) => {
+const FancyLink = ({ children, href, className, disabled }: iFancyLink) => {
   return (
-    <a
+    <Link
       className={[
         "hover:underline  text-2xl flex gap-2 items-center",
         className,
@@ -26,7 +28,7 @@ const Link = ({ children, href, className, disabled }: TLink) => {
           disabled ? "bg-textPrimaryDesaturated" : "bg-textPrimary",
         ].join(" ")}
       />
-    </a>
+    </Link>
   );
 };
 
@@ -37,12 +39,12 @@ export const Navbar = async () => {
 
   return (
     <div className="bg-backgroundDarkSecondary w-full h-16 flex gap-2 pl-4">
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
-      <Link href="/contact">Contact</Link>
-      <Link disabled={isPlayDisabled} href="/play">
+      <FancyLink href="/">Home</FancyLink>
+      <FancyLink href="/about">About</FancyLink>
+      <FancyLink href="/contact">Contact</FancyLink>
+      <FancyLink disabled={isPlayDisabled} href="/play">
         Play
-      </Link>
+      </FancyLink>
 
       <SignIn />
     </div>

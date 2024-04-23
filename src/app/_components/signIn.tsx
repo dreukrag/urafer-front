@@ -1,4 +1,5 @@
 import { signIn, signOut, auth } from "../auth";
+import clientPromise from "../db";
 
 const signOutHandler = async () => {
   "use server";
@@ -16,6 +17,16 @@ export const SignIn = async () => {
   let content;
 
   if (session?.user) {
+    try {
+      const client = await clientPromise;
+      const db = client.db("uranium_fever_db");
+      const coll = db.collection("uf_sessions");
+
+      await coll.insertOne({ sessionUser: session });
+    } catch (err) {
+      console.log("Error :C ", err);
+    }
+
     content = (
       <form action={signOutHandler}>
         <button
@@ -38,8 +49,13 @@ export const SignIn = async () => {
     );
   } else {
     content = (
-      <form className="w-fit" action={signInHandler}>
-        <button type="submit">Signin with Google</button>
+      <form
+        className="w-fit group flex gap-4 pl-4 pr-4 items-center h-full"
+        action={signInHandler}
+      >
+        <button type="submit">
+          <img alt="Sign in with Google" src="/web_dark_rd_SI.svg" />
+        </button>
       </form>
     );
   }
