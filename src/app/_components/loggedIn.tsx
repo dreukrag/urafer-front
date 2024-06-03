@@ -7,8 +7,6 @@ const signOutHandler = async () => {
 };
 
 export const LoggedIn = async () => {
-  const [count, setCounter] = useAtom<boolean>(atom(false));
-
   const session = await auth();
 
   if (session?.user === undefined) {
@@ -17,7 +15,15 @@ export const LoggedIn = async () => {
     return null;
   }
 
-  const user_initials = `${session.user.name?.split(" ")[0][0]}${session.user.name?.split(" ")[1][0]}`;
+  const initials = session.user.name?.split(" ");
+  let user_initials = "";
+
+  if (initials.length > 1) {
+    user_initials = `${initials[0][0]}${initials[1][0]}`;
+  }else{
+    user_initials = `${initials[0][0]}`;
+
+  }
 
   return (
     <div className="bg-backgroundDark h-16 flex w-auto ml-auto">
