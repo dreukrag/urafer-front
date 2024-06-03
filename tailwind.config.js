@@ -23,6 +23,12 @@ module.exports = {
         textPrimary: "#cc9b7e",
         textPrimaryDesaturated: "#a99082",
       },
+      gridTemplateColumns:{
+        setup:"1fr 2fr"
+      },
+      height:{
+        "full-minus-navbar":"calc(100vh - 64px)"
+      }
     },
   },
   plugins: [],
